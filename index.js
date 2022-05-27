@@ -51,7 +51,7 @@ run().catch(console.dir);
 //   // perform actions on the collection object
 //   client.close();
 // });
-
+console.log('hello')
 
 
 app.get('/',(req, res)=>{
