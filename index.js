@@ -36,17 +36,26 @@ async function run(){
             const tool = await toolsCollection.findOne(query);
             res.send(tool)
         })
-
+        //user review send database
         app.post('/review', async(req, res)=>{
             const newReview = req.body;
             const result = await reviewCollection.insertOne(newReview);
             res.send(result)
         })
 
+        //limit review get api for home section
         app.get('/review', async(req, res)=>{
             const query = {};
             const cursor = reviewCollection.find(query);
             const result = await cursor.limit(3).toArray();
+            res.send(result)
+        });
+
+        //all review get api
+        app.get('/allreview', async(req, res)=>{
+            const query = {};
+            const cursor = reviewCollection.find(query);
+            const result = await cursor.toArray();
             res.send(result)
         })
 
