@@ -22,6 +22,7 @@ async function run(){
         await client.connect();
         const toolsCollection = client.db('electric-tools').collection('tools')
         const reviewCollection = client.db('user-review').collection('review')
+        const purchaseCollection = client.db('purchase-information').collection('purchase')
 
         app.get('/tools', async(req, res)=>{
             const query = {};
@@ -55,6 +56,23 @@ async function run(){
         app.get('/allreview', async(req, res)=>{
             const query = {};
             const cursor = reviewCollection.find(query);
+            const result = await cursor.toArray();
+            res.send(result)
+        })
+
+        //purchase information 
+        app.post('/purchase',async(req, res)=>{
+            const newPurchase = req.body;
+            const result = await purchaseCollection.insertOne(newPurchase)
+            res.send(result)
+        })
+
+        // particular user k tar email deya khuje ber korbo 
+
+        app.get('/purchase',async(req, res)=>{
+            const email = req.query.email;
+            const query = {email: email}
+            const cursor = purchaseCollection.find(query);
             const result = await cursor.toArray();
             res.send(result)
         })
