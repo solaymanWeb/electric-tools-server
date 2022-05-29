@@ -36,6 +36,12 @@ async function run(){
             const tools = await cursor.limit(6).toArray();
             res.send(tools)
         })
+        app.get('/alltools', async(req, res)=>{
+            const query = {};
+            const cursor = toolsCollection.find(query);
+            const result = await cursor.toArray();
+            res.send(result)
+        })
 
         app.get('/tools/:id', async(req, res)=>{
             const id = req.params.id;
