@@ -23,6 +23,7 @@ async function run(){
         const toolsCollection = client.db('electric-tools').collection('tools')
         const reviewCollection = client.db('user-review').collection('review')
         const purchaseCollection = client.db('purchase-information').collection('purchase')
+
         
         app.post('/tools', async(req, res)=>{
             const newTools = req.body;
@@ -66,7 +67,7 @@ async function run(){
             res.send(result)
         })
 
-        //limit review get api for home section
+        //limit review get api for home sectionsgit 
         app.get('/review', async(req, res)=>{
             const query = {};
             const cursor = reviewCollection.find(query);
