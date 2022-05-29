@@ -23,11 +23,17 @@ async function run(){
         const toolsCollection = client.db('electric-tools').collection('tools')
         const reviewCollection = client.db('user-review').collection('review')
         const purchaseCollection = client.db('purchase-information').collection('purchase')
+        
+        app.post('/tools', async(req, res)=>{
+            const newTools = req.body;
+            const result = await toolsCollection.insertOne(newTools);
+            res.send(result);
+        })
 
         app.get('/tools', async(req, res)=>{
             const query = {};
             const cursor = toolsCollection.find(query);
-            const tools = await cursor.toArray();
+            const tools = await cursor.limit(6).toArray();
             res.send(tools)
         })
 
