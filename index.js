@@ -35,12 +35,22 @@ async function run(){
             const cursor = toolsCollection.find(query);
             const tools = await cursor.limit(6).toArray();
             res.send(tools)
-        })
+        });
+
         app.get('/alltools', async(req, res)=>{
             const query = {};
             const cursor = toolsCollection.find(query);
             const result = await cursor.toArray();
             res.send(result)
+        })
+
+        //Manage Product delete api
+        app.delete('/alltools/:id', async(req, res)=>{
+            const id = req.params.id;
+            const query = {_id: ObjectId(id)};
+            const result = await toolsCollection.deleteOne(query);
+            res.send(result)
+      
         })
 
         app.get('/tools/:id', async(req, res)=>{
