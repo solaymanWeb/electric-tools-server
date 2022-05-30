@@ -23,12 +23,27 @@ async function run(){
         const toolsCollection = client.db('electric-tools').collection('tools')
         const reviewCollection = client.db('user-review').collection('review')
         const purchaseCollection = client.db('purchase-information').collection('purchase')
+        const userCollection = client.db('user-information').collection('user');
 
         
         app.post('/tools', async(req, res)=>{
             const newTools = req.body;
             const result = await toolsCollection.insertOne(newTools);
             res.send(result);
+        })
+
+        //sign in and create user Email
+        app.put('/user/:email',async(req, res)=>{
+            const email = req.params.email;
+            const user = req.body;
+            const filter = {email: email};
+            const options = {upsert: true};
+            const updateDoc ={
+                $set: user,
+            };
+            const result = await userCollection.updateOne(filter, updateDoc, options)
+            res.send(result); 
+
         })
 
         app.get('/tools', async(req, res)=>{
