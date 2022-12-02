@@ -57,6 +57,14 @@ async function run(){
             res.send(result); 
 
         })
+        // get Admin
+
+        app.get('/admin/:email', async(req, res)=>{
+            const email = req.params.email;
+            const user = await userCollection.findOne({email:email})
+            const isAdmin = user.role === 'admin';
+            res.send({admin: isAdmin})
+        })
 
         // Delete user 
         app.delete('/users/:id', async(req, res)=>{
@@ -65,7 +73,7 @@ async function run(){
             const result = await userCollection.deleteOne(query)
             res.send(result)
         })
-        // get all user 
+        // get all user  
         app.get('/users', async(req, res)=>{
             const users = await userCollection.find().toArray();
             res.send(users)
